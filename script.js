@@ -7,6 +7,7 @@ const websiteAndHostingList = document.getElementById('websites-and-hosting-list
 const moreList = document.getElementById('more-list')
 const allParentLists = document.querySelectorAll('.parentList')
 const getStartedButton = document.getElementById('getStartedButton')
+const getStartedSection=document.querySelector('.get-started-section')
 const secondSectionFirstItem = document.getElementById('success-steps')
 const thirdImageSection = document.querySelector('.img-section')
 const secondSectionItems = document.querySelectorAll('.secondSectionItem')
@@ -301,7 +302,7 @@ function smoothScroll() {
     }, 950);
 }
 // Intersection Observer 
-const observer = new IntersectionObserver((entries, observer) => {
+const observerOne = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             // The element is in view
@@ -316,8 +317,25 @@ const observer = new IntersectionObserver((entries, observer) => {
 });
 
 // Observe each secondSectionItem individually
-secondSectionItems.forEach(item => observer.observe(item));
+secondSectionItems.forEach(item => observerOne.observe(item));
 
+// Intersection Observer 
+const observerTwo = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            // The element is in view
+            entry.target.classList.add('animation');
+        }
+        else {
+            entry.target.classList.remove('animation'); // reset for next scroll
+        }
+    });
+}, {
+    threshold: 0.5 // triggers when 50% of the element is visible
+});
+
+// Observe getStartedSectiom
+observerTwo.observe(getStartedSection);
 // MODAL PREVIEW
 // Create ONE modal globally
 const modalPreview = document.createElement('div');
